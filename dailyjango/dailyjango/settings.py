@@ -25,7 +25,7 @@ SECRET_KEY = '*b7r6pc(pm4ze(rs9^cu(c)#4mxo+b-o#n#s)!&$q=_eak=s$-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -57,7 +57,8 @@ ROOT_URLCONF = 'dailyjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'mybooks/templates')],
+        # 'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
