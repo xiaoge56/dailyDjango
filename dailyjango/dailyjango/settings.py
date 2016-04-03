@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
+import raven
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mybooks',
+    'raven.contrib.django.raven_compat',
 
 )
 
@@ -103,3 +104,62 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+
+#raven setting
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s '
+                      '%(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'sentry': {
+            'level': 'DEBUG',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            # 'tags': {'custom-tag': 'x'},
+            # 'formatters':'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+
+        }
+    },
+    # 'loggers': {
+    #     'django.db.backends': {
+    #         'level': 'ERROR',
+    #         'handlers': ['console'],
+    #         'propagate': False,
+    #     },
+    #     'raven': {
+    #         'level': 'ERROR',
+    #         'handlers': [],
+    #         'propagate': False,
+    #     },
+    #     'sentry.errors': {
+    #         'level': 'DEBUG',
+    #         'handlers': ['console'],
+    #         'propagate': False,
+    #     },
+    # },
+}
+
+#
+RAVEN_CONFIG = {
+    # 'dsn': 'http://bc44212bb88f4c50a65c9e21828589c2:47a675e3c1224e07b6e8abe55391005e@127.0.0.1:9000/20',
+    'dsn': 'http://84be9d5edcdb4adf8799d2a4496ef662:488a2cd07d7e41388f8475924f8b264e@127.0.0.1:9000/19',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    # 'release': raven.fetch_git_sha(os.path.dirname(__file__)),
+}

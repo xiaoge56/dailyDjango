@@ -8,6 +8,7 @@ from django.template import Template,Context
 from django.utils.timezone import now
 from django.views import generic
 from .models import Question,Choice
+import logging
 
 def hello(request):
     time=now()
@@ -26,8 +27,21 @@ def hello(request):
 #     }
 #     return HttpResponse(template.render(context=Context,request=request))
 
-def index(request):
 
+def index(request):
+    # from raven import Client
+    # client = Client('http://84be9d5edcdb4adf8799d2a4496ef662:488a2cd07d7e41388f8475924f8b264e@127.0.0.1:9000/19')
+
+    logger = logging.getLogger('sentry')
+
+    logger.debug('qqqssssss11ss',exc_info=True, extra={'request': request, })
+    logger.error('qqqssss22ss', exc_info=True, extra={'request': request, })
+    logger.warn('qqqsssss33ss', exc_info=True, extra={'request': request, })
+    try:
+        200/0
+    except ZeroDivisionError:
+        # client.captureException()
+        pass
     latest_question_list=Question.objects.order_by('-pub_date')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
     # template = loader.get_template('mybooks/index.html')
