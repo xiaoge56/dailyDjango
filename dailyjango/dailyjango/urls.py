@@ -20,4 +20,5 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mybooks/', include('mybooks.urls',namespace='mybooks')),
+    url(r'register/',include('myauth.urls',namespace='myauth')),
 ]
